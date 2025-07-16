@@ -1,456 +1,445 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px 'Helvetica Neue'; color: #15171a; -webkit-text-stroke: #15171a}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px 'Helvetica Neue'; color: #15171a; -webkit-text-stroke: #15171a; min-height: 18.0px}
-    span.s1 {font-kerning: none}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>“戏唱派”项目交互式报告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Modern Ink Wash -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive project pitch deck. A sticky top navigation allows users to jump to key pillars of the project: 缘起 (Origin/Problem), 设计 (App Design), 技术 (Technology), 市场 (Business Plan), and 蓝图 (Vision). This non-linear navigation is more user-friendly than a linear document scroll. The structure logically presents the project by first establishing the market gap (with an interactive competitor chart), then presenting the solution (app design visualized with flow diagrams and cards), detailing the underlying technology (with simplified architectural diagrams), outlining the business strategy (with an interactive revenue model chart), and finally concluding with the long-term vision. This user-centric flow is designed to build a compelling narrative for a potential investor, partner, or academic reviewer. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Competitor Analysis (Table 1) -> Goal: Compare -> Viz: Interactive Bar Chart -> Interaction: Click on a bar to highlight its weaknesses -> Justification: More engaging than a static table, allows for quick comparison and detailed drill-down. -> Library: Chart.js.
+        - Report Info: Learning Path (Sec 2.3) -> Goal: Organize -> Viz: Vertical Timeline Diagram -> Interaction: Static visual -> Justification: Clearly shows the step-by-step progression for the user, which is a key feature. -> Library: HTML/CSS with Tailwind.
+        - Report Info: Gamification Strategy (Sec 2.2) -> Goal: Inform -> Viz: Icon-based Card Grid -> Interaction: Hover effects -> Justification: Visually breaks down the complex strategy into digestible, appealing components. -> Library: HTML/CSS with Tailwind.
+        - Report Info: Revenue Model (Table 4) -> Goal: Inform/Compare -> Viz: Donut Chart -> Interaction: Click on a segment to update the description panel -> Justification: Provides a quick overview of the revenue mix and allows interactive exploration of each component's role. -> Library: Chart.js.
+        - Report Info: Tech Architecture (Sec 3.1.1) -> Goal: Organize/Explain -> Viz: Simplified Flow Diagram -> Interaction: Static visual -> Justification: Demystifies the complex front-end/back-end technical approach in an easy-to-understand visual format. -> Library: HTML/CSS with Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            background-color: #fdfaf6;
+            color: #3d405b;
+            font-family: 'Inter', sans-serif;
+        }
+        .font-serif-sc {
+            font-family: 'Noto Serif SC', serif;
+        }
+        .section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #9b2c2c;
+            border-bottom-color: #9b2c2c;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 600px;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #cbd5e1;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: #ffffff;
+            border: 3px solid #9b2c2c;
+        }
+    </style>
 </head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="zh-CN"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;“戏唱派”项目交互式报告&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>body {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: #fdfaf6;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: #3d405b;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.font-serif-sc {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Noto Serif SC', serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.section-title {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Noto Serif SC', serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-weight: 700;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.nav-link {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transition: color 0.3s, border-bottom-color 0.3s;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-bottom: 2px solid transparent;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.nav-link:hover, .nav-link.active {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: #9b2c2c;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-bottom-color: #9b2c2c;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.card {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: #ffffff;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border: 1px solid #e2e8f0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transition: transform 0.3s, box-shadow 0.3s;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.card:hover {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transform: translateY(-5px);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.chart-container {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: relative;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin-left: auto;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin-right: auto;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>max-width: 600px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 320px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>max-height: 400px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>@media (min-width: 768px) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>.chart-container {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>height: 400px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.timeline {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: relative;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>padding-left: 2.5rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.timeline::before {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>content: '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: absolute;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 0.5rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>bottom: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 2px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: #cbd5e1;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.timeline-item::before {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>content: '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: absolute;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: -0.25rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 0.5rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 1rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 1rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 9999px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: #ffffff;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border: 3px solid #9b2c2c;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body class="antialiased"&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Header &amp; Navigation --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;nav class="container mx-auto px-6 py-4 flex justify-between items-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-2xl font-serif-sc font-bold text-[#3d405b]"&gt;&lt;span class="text-[#9b2c2c]"&gt;戏&lt;/span&gt;唱派&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="hidden md:flex space-x-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#origin" class="nav-link font-serif-sc"&gt;缘起&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#design" class="nav-link font-serif-sc"&gt;设计&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#tech" class="nav-link font-serif-sc"&gt;技术&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#market" class="nav-link font-serif-sc"&gt;市场&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#vision" class="nav-link font-serif-sc"&gt;蓝图&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="md:hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button id="menu-btn" class="text-gray-600 focus:outline-none"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"&gt;&lt;/path&gt;&lt;/svg&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="#origin" class="block nav-link font-serif-sc"&gt;缘起&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="#design" class="block nav-link font-serif-sc"&gt;设计&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="#tech" class="block nav-link font-serif-sc"&gt;技术&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="#market" class="block nav-link font-serif-sc"&gt;市场&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="#vision" class="block nav-link font-serif-sc"&gt;蓝图&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;main&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Hero Section --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="min-h-screen flex items-center justify-center text-center bg-cover bg-center" style="background-image: linear-gradient(rgba(253, 250, 246, 0.8), rgba(253, 250, 246, 1)), url('https://images.unsplash.com/photo-1543862415-961d3fbe5c54?q=80&amp;w=2070&amp;auto=format&amp;fit=crop');"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-5xl md:text-7xl font-serif-sc font-bold text-[#3d405b] tracking-wider"&gt;数字传承与交互美学&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="text-2xl md:text-3xl font-serif-sc mt-4 text-[#9b2c2c]"&gt;青少年戏曲教唱应用“戏唱派”项目报告&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="mt-8 max-w-3xl mx-auto text-lg text-gray-700"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>本报告旨在将“戏唱派”应用的学术构想转化为一个生动的交互式体验。您将探索我们如何通过游戏化设计、前沿技术和可持续商业模式，为中国传统戏曲的数字化传承注入新的活力。</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Section 1: Origin --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section id="origin" class="py-20 md:py-32"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="section-title text-4xl text-center mb-4"&gt;缘起：困境与机遇&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>在数字时代，古老的戏曲艺术面临着严峻的“青年断代”危机。然而，危中有机。现有戏曲App多为服务中老年戏迷的“资源库”，这为我们创造一款专注于青少年互动教学的应用，提供了明确的市场空白。</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;h4 class="font-serif-sc text-2xl text-center mb-2"&gt;现有App竞品分析&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;p class="text-center text-gray-500 mb-8"&gt;点击下方的图表条目，查看各竞品的主要弱点。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;canvas id="competitorChart"&gt;&lt;/canvas&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div id="competitor-info" class="mt-8 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-center min-h-[60px] flex items-center justify-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p&gt;请点击图表中的一个竞品进行查看。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Section 2: Design --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section id="design" class="py-20 md:py-32 bg-gray-50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="section-title text-4xl text-center mb-4"&gt;设计：“寓教于乐”&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>我们以“游戏化学习”为核心，将教育学、心理学与现代UI/UX设计融合，构建一套能激发并维持青少年内在学习动力的系统，让学戏像玩游戏一样有趣。</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="grid md:grid-cols-2 gap-12 items-start"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h4 class="font-serif-sc text-2xl mb-6 text-center md:text-left"&gt;游戏化激励策略&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="grid grid-cols-2 gap-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="card p-4 text-center rounded-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="text-4xl text-[#9b2c2c]"&gt;🏆&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h5 class="font-bold mt-2"&gt;核心激励 (PBL)&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm text-gray-600"&gt;积分、徽章与排行榜，提供即时反馈与荣誉感。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;div class="card p-4 text-center rounded-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="text-4xl text-[#9b2c2c]"&gt;📜&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h5 class="font-bold mt-2"&gt;叙事化任务&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm text-gray-600"&gt;将学习包装成故事，用“师门任务”驱动学习目标。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;div class="card p-4 text-center rounded-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="text-4xl text-[#9b2c2c]"&gt;🎭&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h5 class="font-bold mt-2"&gt;虚拟形象装扮&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm text-gray-600"&gt;自定义Q版戏曲形象，满足自我呈现的心理需求。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;div class="card p-4 text-center rounded-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="text-4xl text-[#9b2c2c]"&gt;🤝&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h5 class="font-bold mt-2"&gt;社交协作&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm text-gray-600"&gt;“师门”团队任务，化解孤独感，将文化学习内化。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h4 class="font-serif-sc text-2xl mb-6 text-center md:text-left"&gt;阶梯式学习路径&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-white p-6 rounded-xl shadow-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                           </span>&lt;div class="timeline"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                               </span>&lt;div class="timeline-item relative pb-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                   </span>&lt;h5 class="font-bold"&gt;第一阶段: 梨园初啼&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                   </span>&lt;p class="text-sm text-gray-600"&gt;通过互动小游戏学习剧种、行当、四呼五音等基础知识。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                               </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                               </span>&lt;div class="timeline-item relative pb-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                   </span>&lt;h5 class="font-bold"&gt;第二阶段: 曲径通幽&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                   </span>&lt;p class="text-sm text-gray-600"&gt;精学经典唱段，提供逐句跟唱、伴奏、唱腔镜等辅助功能。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                               </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                               </span>&lt;div class="timeline-item relative pb-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                   </span>&lt;h5 class="font-bold"&gt;第三阶段: 行当专精&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                   </span>&lt;p class="text-sm text-gray-600"&gt;选择生、旦、净、丑作为主修方向，进行深度学习。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                               </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                               </span>&lt;div class="timeline-item relative"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                   </span>&lt;h5 class="font-bold"&gt;第四阶段: 品味大观&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                   </span>&lt;p class="text-sm text-gray-600"&gt;赏析全本大戏，通过“知识点弹幕”理解艺术内涵。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                               </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                           </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Section 3: Technology --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section id="tech" class="py-20 md:py-32"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="section-title text-4xl text-center mb-4"&gt;技术：沉浸式引擎&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>我们采用前后端分离的混合架构实现高精度实时声乐反馈，并构建了深度标注的MIR大数据曲库。核心创新在于引入游戏音频引擎，创造动态交互的音频场景。</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="grid md:grid-cols-2 gap-12 items-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;h4 class="font-serif-sc text-2xl mb-6 text-center"&gt;实时音高检测架构&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;div class="flex flex-col md:flex-row items-center justify-center gap-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="text-center p-4 border-2 border-dashed border-gray-300 rounded-lg w-full md:w-1/2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="text-3xl"&gt;📱&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h5 class="font-bold mt-2"&gt;前端 App&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm text-gray-600"&gt;采用轻量级YIN算法，进行低延迟实时音高计算。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="text-3xl font-bold text-[#9b2c2c] transform md:-rotate-90"&gt;➔&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;div class="text-center p-4 border-2 border-dashed border-gray-300 rounded-lg w-full md:w-1/2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="text-3xl"&gt;☁️&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h5 class="font-bold mt-2"&gt;后端服务器&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm text-gray-600"&gt;采用高精度pYIN算法，离线分析范唱，生成标准音高轨迹。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-[#3d405b] text-white p-8 rounded-xl shadow-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h4 class="font-serif-sc text-2xl mb-4 text-center"&gt;【核心创新】&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h5 class="font-serif-sc text-xl mb-4 text-center font-bold text-yellow-300"&gt;交互式音频引擎 (Wwise)&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p class="text-center text-gray-300"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                           </span>这不再是简单的“对答案”。用户的音准、节奏、力度将成为实时参数，动态改变伴奏的配器、和谐度与氛围。唱得好，乐队为你喝彩；唱得有偏差，乐队会巧妙提示。这创造了一个能与你“合奏”的、会呼吸的音乐环境，实现真正的沉浸式学习。</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Section 4: Market --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section id="market" class="py-20 md:py-32 bg-gray-50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="section-title text-4xl text-center mb-4"&gt;市场：可持续生态&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>我们采用灵活的混合盈利模式，在文化公益性与商业可持续性间寻求平衡。通过多渠道推广，将“戏唱派”打造成一个“新国潮”文化品牌。</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;h4 class="font-serif-sc text-2xl text-center mb-8"&gt;“四轮驱动”混合盈利模式&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="grid md:grid-cols-2 gap-8 items-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="chart-container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>&lt;canvas id="revenueChart"&gt;&lt;/canvas&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div id="revenue-info" class="p-4 bg-blue-50 border border-blue-200 text-blue-800 rounded-lg min-h-[150px] flex flex-col justify-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h5 id="revenue-title" class="font-bold text-lg mb-2"&gt;免费增值 (Freemium)&lt;/h5&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;p id="revenue-desc" class="text-base"&gt;提供核心教唱功能与入门曲目，实现文化普及，最大化吸引用户。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Section 5: Vision --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section id="vision" class="py-20 md:py-32"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;h3 class="section-title text-4xl text-center mb-4"&gt;蓝图：不止于App&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>“戏唱派”不止是一款应用，它是一个起点，旨在构建一个完整的非物质文化遗产数字化生态系统，连接艺术、教育、科技与产业。</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="grid md:grid-cols-3 gap-8 text-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="card p-6 rounded-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;div class="text-4xl text-[#9b2c2c] mb-4"&gt;🌐&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;h4 class="font-serif-sc text-xl font-bold mb-2"&gt;平台化扩展&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;p class="text-gray-600"&gt;将核心技术与模式复制到民歌、古琴等其他传统艺术领域。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;div class="card p-6 rounded-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;div class="text-4xl text-[#9b2c2c] mb-4"&gt;📊&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;h4 class="font-serif-sc text-xl font-bold mb-2"&gt;数据资产价值&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;p class="text-gray-600"&gt;与科研机构合作，利用海量学习数据推动计算艺术学等前沿学科发展。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>&lt;div class="card p-6 rounded-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;div class="text-4xl text-[#9b2c2c] mb-4"&gt;🔄&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;h4 class="font-serif-sc text-xl font-bold mb-2"&gt;线上线下联动&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>&lt;p class="text-gray-600"&gt;举办用户展演、名家见面会，为传统院团输送年轻观众，反哺产业。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-[#3d405b] text-white py-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="container mx-auto px-6 text-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;&amp;copy; 2025 “戏唱派”项目组。保留所有权利。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p class="text-sm text-gray-400 mt-2"&gt;一个旨在用科技点亮传统文化未来的构想。&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// 移动端菜单切换</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const menuBtn = document.getElementById('menu-btn');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const mobileMenu = document.getElementById('mobile-menu');</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>menuBtn.addEventListener('click', () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>mobileMenu.classList.toggle('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// 竞品分析图表</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const competitorData = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>labels: ['梨园行', '京剧迷', '唱戏吧'],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>datasets: [{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>label: '综合评分 (教学体系与互动性)',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>data: [30, 45, 20],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>backgroundColor: [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>'rgba(148, 163, 184, 0.6)',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>'rgba(148, 163, 184, 0.6)',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>'rgba(148, 163, 184, 0.6)'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>borderColor: [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>'rgba(100, 116, 139, 1)',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>'rgba(100, 116, 139, 1)',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>'rgba(100, 116, 139, 1)'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>borderWidth: 1</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}]</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const competitorInfoData = [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'主要缺点：缺乏系统性教学，用户体验偏老化，不适合青少年。定位为中老年戏迷的“资源库”。',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'主要缺点：内容垂直于京剧，教学不成体系，互动形式单一，未能有效吸引初学者。',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'主要缺点：产品形态陈旧，用户体验差，缺乏内容更新与维护，已停止迭代。'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const competitorInfoDiv = document.getElementById('competitor-info');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const competitorChartCtx = document.getElementById('competitorChart').getContext('2d');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const competitorChart = new Chart(competitorChartCtx, {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>type: 'bar',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>data: competitorData,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>options: {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>indexAxis: 'y',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>responsive: true,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>plugins: {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>legend: { display: false },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>tooltip: {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>callbacks: {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>label: function(context) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>return '点击查看弱点分析';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>scales: {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>x: {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>beginAtZero: true,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>max: 100,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>title: { display: true, text: '综合评分' }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>onClick: (evt, elements) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>if (elements.length &gt; 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>const index = elements[0].index;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>competitorInfoDiv.innerHTML = `&lt;p&gt;${competitorInfoData[index]}&lt;/p&gt;`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>competitorChart.data.datasets[0].backgroundColor = competitorData.datasets[0].backgroundColor.map((color, i) =&gt; i === index ? '#9b2c2c' : 'rgba(148, 163, 184, 0.6)');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>competitorChart.update();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// 收入模式图表</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const revenueData = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>labels: ['免费增值', '订阅制', '应用内购买', 'B2B授权'],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>datasets: [{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>data: [40, 35, 10, 15],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>backgroundColor: ['#60a5fa', '#f87171', '#fbbf24', '#34d399'],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>borderColor: '#fdfaf6',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>borderWidth: 4,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>hoverOffset: 8</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}]</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const revenueInfoData = [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ title: '免费增值 (Freemium)', desc: '提供核心教唱功能与入门曲目，实现文化普及，最大化吸引用户。' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ title: '订阅制 (Subscription)', desc: '核心收入来源。为深度用户提供全部曲库、AI诊断报告、大师课等高级服务。' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ title: '应用内购买 (IAP)', desc: '补充收入。用户可购买虚拟形象高级装扮、舞台背景等，满足个性化需求。' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ title: 'B2B授权 (Licensing)', desc: '稳定收入流。向学校和教育机构出售教育版，提供教师管理后台，扩大市场渗透。' }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const revenueInfoTitle = document.getElementById('revenue-title');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const revenueInfoDesc = document.getElementById('revenue-desc');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const revenueChartCtx = document.getElementById('revenueChart').getContext('2d');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const revenueChart = new Chart(revenueChartCtx, {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>type: 'doughnut',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>data: revenueData,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>options: {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>responsive: true,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>cutout: '60%',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>plugins: {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>legend: { position: 'bottom' },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>tooltip: { enabled: true }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                     </span>onClick: (evt, elements) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>if (elements.length &gt; 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>const index = elements[0].index;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>revenueInfoTitle.textContent = revenueInfoData[index].title;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>revenueInfoDesc.textContent = revenueInfoData[index].desc;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// 导航栏激活状态</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const sections = document.querySelectorAll('section');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const observer = new IntersectionObserver(entries =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>entries.forEach(entry =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (entry.isIntersecting) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const id = entry.target.id;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>document.querySelectorAll('.nav-link').forEach(link =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>link.classList.remove('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>if (link.getAttribute('href') === `#${id}`) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>link.classList.add('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}, { rootMargin: '-50% 0px -50% 0px' });</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>sections.forEach(section =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>observer.observe(section);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-serif-sc font-bold text-[#3d405b]"><span class="text-[#9b2c2c]">戏</span>唱派</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#origin" class="nav-link font-serif-sc">缘起</a>
+                <a href="#design" class="nav-link font-serif-sc">设计</a>
+                <a href="#tech" class="nav-link font-serif-sc">技术</a>
+                <a href="#market" class="nav-link font-serif-sc">市场</a>
+                <a href="#vision" class="nav-link font-serif-sc">蓝图</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2">
+            <a href="#origin" class="block nav-link font-serif-sc">缘起</a>
+            <a href="#design" class="block nav-link font-serif-sc">设计</a>
+            <a href="#tech" class="block nav-link font-serif-sc">技术</a>
+            <a href="#market" class="block nav-link font-serif-sc">市场</a>
+            <a href="#vision" class="block nav-link font-serif-sc">蓝图</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="min-h-screen flex items-center justify-center text-center bg-cover bg-center" style="background-image: linear-gradient(rgba(253, 250, 246, 0.8), rgba(253, 250, 246, 1)), url('https://images.unsplash.com/photo-1543862415-961d3fbe5c54?q=80&w=2070&auto=format&fit=crop');">
+            <div class="container mx-auto px-6">
+                <h2 class="text-5xl md:text-7xl font-serif-sc font-bold text-[#3d405b] tracking-wider">数字传承与交互美学</h2>
+                <p class="text-2xl md:text-3xl font-serif-sc mt-4 text-[#9b2c2c]">青少年戏曲教唱应用“戏唱派”项目报告</p>
+                <p class="mt-8 max-w-3xl mx-auto text-lg text-gray-700">
+                    本报告旨在将“戏唱派”应用的学术构想转化为一个生动的交互式体验。您将探索我们如何通过游戏化设计、前沿技术和可持续商业模式，为中国传统戏曲的数字化传承注入新的活力。
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 1: Origin -->
+        <section id="origin" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h3 class="section-title text-4xl text-center mb-4">缘起：困境与机遇</h3>
+                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+                    在数字时代，古老的戏曲艺术面临着严峻的“青年断代”危机。然而，危中有机。现有戏曲App多为服务中老年戏迷的“资源库”，这为我们创造一款专注于青少年互动教学的应用，提供了明确的市场空白。
+                </p>
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+                     <h4 class="font-serif-sc text-2xl text-center mb-2">现有App竞品分析</h4>
+                     <p class="text-center text-gray-500 mb-8">点击下方的图表条目，查看各竞品的主要弱点。</p>
+                    <div class="chart-container">
+                        <canvas id="competitorChart"></canvas>
+                    </div>
+                    <div id="competitor-info" class="mt-8 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-center min-h-[60px] flex items-center justify-center">
+                        <p>请点击图表中的一个竞品进行查看。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Design -->
+        <section id="design" class="py-20 md:py-32 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <h3 class="section-title text-4xl text-center mb-4">设计：“寓教于乐”</h3>
+                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+                    我们以“游戏化学习”为核心，将教育学、心理学与现代UI/UX设计融合，构建一套能激发并维持青少年内在学习动力的系统，让学戏像玩游戏一样有趣。
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-start">
+                    <div>
+                        <h4 class="font-serif-sc text-2xl mb-6 text-center md:text-left">游戏化激励策略</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="card p-4 text-center rounded-lg">
+                                <div class="text-4xl text-[#9b2c2c]">🏆</div>
+                                <h5 class="font-bold mt-2">核心激励 (PBL)</h5>
+                                <p class="text-sm text-gray-600">积分、徽章与排行榜，提供即时反馈与荣誉感。</p>
+                            </div>
+                             <div class="card p-4 text-center rounded-lg">
+                                <div class="text-4xl text-[#9b2c2c]">📜</div>
+                                <h5 class="font-bold mt-2">叙事化任务</h5>
+                                <p class="text-sm text-gray-600">将学习包装成故事，用“师门任务”驱动学习目标。</p>
+                            </div>
+                             <div class="card p-4 text-center rounded-lg">
+                                <div class="text-4xl text-[#9b2c2c]">🎭</div>
+                                <h5 class="font-bold mt-2">虚拟形象装扮</h5>
+                                <p class="text-sm text-gray-600">自定义Q版戏曲形象，满足自我呈现的心理需求。</p>
+                            </div>
+                             <div class="card p-4 text-center rounded-lg">
+                                <div class="text-4xl text-[#9b2c2c]">🤝</div>
+                                <h5 class="font-bold mt-2">社交协作</h5>
+                                <p class="text-sm text-gray-600">“师门”团队任务，化解孤独感，将文化学习内化。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-serif-sc text-2xl mb-6 text-center md:text-left">阶梯式学习路径</h4>
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                           <div class="timeline">
+                               <div class="timeline-item relative pb-8">
+                                   <h5 class="font-bold">第一阶段: 梨园初啼</h5>
+                                   <p class="text-sm text-gray-600">通过互动小游戏学习剧种、行当、四呼五音等基础知识。</p>
+                               </div>
+                               <div class="timeline-item relative pb-8">
+                                   <h5 class="font-bold">第二阶段: 曲径通幽</h5>
+                                   <p class="text-sm text-gray-600">精学经典唱段，提供逐句跟唱、伴奏、唱腔镜等辅助功能。</p>
+                               </div>
+                               <div class="timeline-item relative pb-8">
+                                   <h5 class="font-bold">第三阶段: 行当专精</h5>
+                                   <p class="text-sm text-gray-600">选择生、旦、净、丑作为主修方向，进行深度学习。</p>
+                               </div>
+                               <div class="timeline-item relative">
+                                   <h5 class="font-bold">第四阶段: 品味大观</h5>
+                                   <p class="text-sm text-gray-600">赏析全本大戏，通过“知识点弹幕”理解艺术内涵。</p>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Technology -->
+        <section id="tech" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h3 class="section-title text-4xl text-center mb-4">技术：沉浸式引擎</h3>
+                 <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+                    我们采用前后端分离的混合架构实现高精度实时声乐反馈，并构建了深度标注的MIR大数据曲库。核心创新在于引入游戏音频引擎，创造动态交互的音频场景。
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+                         <h4 class="font-serif-sc text-2xl mb-6 text-center">实时音高检测架构</h4>
+                         <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                            <div class="text-center p-4 border-2 border-dashed border-gray-300 rounded-lg w-full md:w-1/2">
+                                <div class="text-3xl">📱</div>
+                                <h5 class="font-bold mt-2">前端 App</h5>
+                                <p class="text-sm text-gray-600">采用轻量级YIN算法，进行低延迟实时音高计算。</p>
+                            </div>
+                            <div class="text-3xl font-bold text-[#9b2c2c] transform md:-rotate-90">➔</div>
+                             <div class="text-center p-4 border-2 border-dashed border-gray-300 rounded-lg w-full md:w-1/2">
+                                <div class="text-3xl">☁️</div>
+                                <h5 class="font-bold mt-2">后端服务器</h5>
+                                <p class="text-sm text-gray-600">采用高精度pYIN算法，离线分析范唱，生成标准音高轨迹。</p>
+                            </div>
+                         </div>
+                    </div>
+                    
+                    <div class="bg-[#3d405b] text-white p-8 rounded-xl shadow-lg">
+                        <h4 class="font-serif-sc text-2xl mb-4 text-center">【核心创新】</h4>
+                        <h5 class="font-serif-sc text-xl mb-4 text-center font-bold text-yellow-300">交互式音频引擎 (Wwise)</h5>
+                        <p class="text-center text-gray-300">
+                           这不再是简单的“对答案”。用户的音准、节奏、力度将成为实时参数，动态改变伴奏的配器、和谐度与氛围。唱得好，乐队为你喝彩；唱得有偏差，乐队会巧妙提示。这创造了一个能与你“合奏”的、会呼吸的音乐环境，实现真正的沉浸式学习。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Market -->
+        <section id="market" class="py-20 md:py-32 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <h3 class="section-title text-4xl text-center mb-4">市场：可持续生态</h3>
+                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+                    我们采用灵活的混合盈利模式，在文化公益性与商业可持续性间寻求平衡。通过多渠道推广，将“戏唱派”打造成一个“新国潮”文化品牌。
+                </p>
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+                    <h4 class="font-serif-sc text-2xl text-center mb-8">“四轮驱动”混合盈利模式</h4>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="chart-container">
+                             <canvas id="revenueChart"></canvas>
+                        </div>
+                        <div id="revenue-info" class="p-4 bg-blue-50 border border-blue-200 text-blue-800 rounded-lg min-h-[150px] flex flex-col justify-center">
+                            <h5 id="revenue-title" class="font-bold text-lg mb-2">免费增值 (Freemium)</h5>
+                            <p id="revenue-desc" class="text-base">提供核心教唱功能与入门曲目，实现文化普及，最大化吸引用户。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 5: Vision -->
+        <section id="vision" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                 <h3 class="section-title text-4xl text-center mb-4">蓝图：不止于App</h3>
+                 <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-16">
+                    “戏唱派”不止是一款应用，它是一个起点，旨在构建一个完整的非物质文化遗产数字化生态系统，连接艺术、教育、科技与产业。
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="card p-6 rounded-lg">
+                         <div class="text-4xl text-[#9b2c2c] mb-4">🌐</div>
+                         <h4 class="font-serif-sc text-xl font-bold mb-2">平台化扩展</h4>
+                         <p class="text-gray-600">将核心技术与模式复制到民歌、古琴等其他传统艺术领域。</p>
+                    </div>
+                     <div class="card p-6 rounded-lg">
+                         <div class="text-4xl text-[#9b2c2c] mb-4">📊</div>
+                         <h4 class="font-serif-sc text-xl font-bold mb-2">数据资产价值</h4>
+                         <p class="text-gray-600">与科研机构合作，利用海量学习数据推动计算艺术学等前沿学科发展。</p>
+                    </div>
+                     <div class="card p-6 rounded-lg">
+                         <div class="text-4xl text-[#9b2c2c] mb-4">🔄</div>
+                         <h4 class="font-serif-sc text-xl font-bold mb-2">线上线下联动</h4>
+                         <p class="text-gray-600">举办用户展演、名家见面会，为传统院团输送年轻观众，反哺产业。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-[#3d405b] text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 “戏唱派”项目组。保留所有权利。</p>
+            <p class="text-sm text-gray-400 mt-2">一个旨在用科技点亮传统文化未来的构想。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const competitorData = {
+                labels: ['梨园行', '京剧迷', '唱戏吧'],
+                datasets: [{
+                    label: '综合评分 (教学体系与互动性)',
+                    data: [30, 45, 20],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.6)',
+                        'rgba(148, 163, 184, 0.6)',
+                        'rgba(148, 163, 184, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(100, 116, 139, 1)',
+                        'rgba(100, 116, 139, 1)',
+                        'rgba(100, 116, 139, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const competitorInfoData = [
+                '主要缺点：缺乏系统性教学，用户体验偏老化，不适合青少年。定位为中老年戏迷的“资源库”。',
+                '主要缺点：内容垂直于京剧，教学不成体系，互动形式单一，未能有效吸引初学者。',
+                '主要缺点：产品形态陈旧，用户体验差，缺乏内容更新与维护，已停止迭代。'
+            ];
+
+            const competitorInfoDiv = document.getElementById('competitor-info');
+            const competitorChartCtx = document.getElementById('competitorChart').getContext('2d');
+            const competitorChart = new Chart(competitorChartCtx, {
+                type: 'bar',
+                data: competitorData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '点击查看弱点分析';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: '综合评分' }
+                        }
+                    },
+                    onClick: (evt, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            competitorInfoDiv.innerHTML = `<p>${competitorInfoData[index]}</p>`;
+                            competitorChart.data.datasets[0].backgroundColor = competitorData.datasets[0].backgroundColor.map((color, i) => i === index ? '#9b2c2c' : 'rgba(148, 163, 184, 0.6)');
+                            competitorChart.update();
+                        }
+                    }
+                }
+            });
+
+            const revenueData = {
+                labels: ['免费增值', '订阅制', '应用内购买', 'B2B授权'],
+                datasets: [{
+                    data: [40, 35, 10, 15],
+                    backgroundColor: ['#60a5fa', '#f87171', '#fbbf24', '#34d399'],
+                    borderColor: '#fdfaf6',
+                    borderWidth: 4,
+                    hoverOffset: 8
+                }]
+            };
+
+            const revenueInfoData = [
+                { title: '免费增值 (Freemium)', desc: '提供核心教唱功能与入门曲目，实现文化普及，最大化吸引用户。' },
+                { title: '订阅制 (Subscription)', desc: '核心收入来源。为深度用户提供全部曲库、AI诊断报告、大师课等高级服务。' },
+                { title: '应用内购买 (IAP)', desc: '补充收入。用户可购买虚拟形象高级装扮、舞台背景等，满足个性化需求。' },
+                { title: 'B2B授权 (Licensing)', desc: '稳定收入流。向学校和教育机构出售教育版，提供教师管理后台，扩大市场渗透。' }
+            ];
+
+            const revenueInfoTitle = document.getElementById('revenue-title');
+            const revenueInfoDesc = document.getElementById('revenue-desc');
+            const revenueChartCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueChartCtx, {
+                type: 'doughnut',
+                data: revenueData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: { enabled: true }
+                    },
+                     onClick: (evt, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            revenueInfoTitle.textContent = revenueInfoData[index].title;
+                            revenueInfoDesc.textContent = revenueInfoData[index].desc;
+                        }
+                    }
+                }
+            });
+
+            const sections = document.querySelectorAll('section');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+        });
+    </script>
 </body>
 </html>
